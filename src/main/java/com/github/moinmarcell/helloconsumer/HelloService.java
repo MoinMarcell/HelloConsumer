@@ -1,14 +1,16 @@
 package com.github.moinmarcell.helloconsumer;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 @Service
 public class HelloService {
-    public static final String BASE_URL = "http://localhost:8080";
+    public String BASE_URL;
     private final RestClient restClient;
 
-    public HelloService() {
+    public HelloService(@Value("${helloproducer.url}") String baseUrl) {
+        this.BASE_URL = baseUrl;
         this.restClient = RestClient.builder().baseUrl(BASE_URL).build();
     }
 
